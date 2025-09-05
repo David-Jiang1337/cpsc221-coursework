@@ -16,7 +16,7 @@ namespace cs221util {
     this->a = 1;
   }
 
-  RGBAPixel::RGBAPixel(const unsigned char r, const unsigned char g, const unsigned char b) {
+  RGBAPixel::RGBAPixel(const unsigned char r, const unsigned char g, const unsigned char b, const unsigned char a) {
     this->r = r;
     this->g = g;
     this->b = b;
