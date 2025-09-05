@@ -37,10 +37,14 @@ PNG grayscale(PNG image) {
       // `pixel` is a pointer to the memory stored inside of the PNG `image`,
       // which means you're changing the image directly.  No need to `set`
       // the pixel since you're directly changing the memory of the image.
-      double grayvalue = 0.0; // this will be changed once you determine what the adjusted RGB values will be below!
-      double adjusted_red = 0.299 * pixel->r;
+      const double adjusted_red = 0.299 * pixel->r;
+      const double adjusted_green = 0.587 * pixel->g;
+      const double adjusted_blue = 0.114 * pixel->b;
+      const double grayvalue = adjusted_red + adjusted_blue + adjusted_green; // this will be changed once you determine what the adjusted RGB values will be below!
 
       pixel->r = (unsigned char) grayvalue;
+      pixel->g = (unsigned char) grayvalue;
+      pixel->b = (unsigned char) grayvalue;
     }
   }
 
@@ -70,7 +74,29 @@ PNG grayscale(PNG image) {
  * @return The image with a spotlight.
  */
 PNG createSpotlight(PNG image, int centerX, int centerY) {
+  for (int x = 0; x < image.width(); x++) {
+    for (int y = 0; y < image.height(); y++) {
+      RGBAPixel* pixel = image.getPixel(x, y);
+      
+      /*
+       * the sign of the distance does not matter as it will be squared when
+       * calculating dist and should not be used elsewhere.
+       */
+      const int distX = centerX - x;
+      const int distY = centerY - y;
+      const double dist = std::sqrt((distX * distX) + (distY * distY));
+      double brightCoeff = 1 - (dist * 0.005);
+      if (brightCoeff < 0) {
+        brightCoeff = 0;
+      } else if (brightCoeff > 1) {
+        brightCoeff = 1;
+      }
 
+      pixel->r = (unsigned char) (pixel->r * brightCoeff);
+      pixel->g = (unsigned char) (pixel->g * brightCoeff);
+      pixel->b = (unsigned char) (pixel->b * brightCoeff);
+    }
+  }
   return image;
 }
 
