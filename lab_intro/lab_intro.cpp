@@ -114,7 +114,22 @@ PNG createSpotlight(PNG image, int centerX, int centerY) {
  * @return The UBCify'd image.
 **/
 PNG ubcify(PNG image) {
-
+  RGBAPixel ubcBlue = RGBAPixel(12, 35, 68);
+  RGBAPixel ubcYellow = RGBAPixel(247, 184, 0);
+  for (int x = 0; x < image.width(); x++) {
+    for (int y = 0; y < image.height(); y++) {
+      RGBAPixel* pixel = image.getPixel(x, y);
+      if (colordist(*pixel, ubcBlue) < colordist(*pixel, ubcYellow)) {
+        pixel->r = ubcBlue.r;
+        pixel->g = ubcBlue.g;
+        pixel->b = ubcBlue.b;
+      } else {
+        pixel->r = ubcYellow.r;
+        pixel->g = ubcYellow.g;
+        pixel->b = ubcYellow.b;
+      }
+    }
+  }
   return image;
 }
 
