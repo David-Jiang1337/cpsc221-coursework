@@ -30,7 +30,7 @@ namespace cs221util {
        */
       RGBAPixel(const unsigned char r, const unsigned char g, 
           const unsigned char b, const double a);
-  }
+  };
 }
 
 #endif
