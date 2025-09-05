@@ -148,7 +148,31 @@ PNG ubcify(PNG image) {
 * @return The watermarked image.
 */
 PNG watermark(PNG firstImage, PNG secondImage) {
+  RGBAPixel white = RGBAPixel();
+  for (int x = 0; x < secondImage.width(); x++) {
+    for (int y = 0; y < secondImage.height(); y++) {
+      RGBAPixel* firstImgPixel = firstImage.getPixel(x, y);
+      RGBAPixel* secondImgPixel = secondImage.getPixel(x, y);
+      if (secondImgPixel->r == white.r
+          && secondImgPixel->g == white.g
+          && secondImgPixel->b == white.b) {
+          
+          unsigned int brightR = firstImgPixel->r + 40;
+          unsigned int brightG = firstImgPixel->g + 40;
+          unsigned int brightB = firstImgPixel->b + 40;
+          if (brightR > 255)
+            brightR = 255;
+          if (brightG > 255)
+            brightG = 255;
+          if (brightB > 255)
+            brightB = 255;
 
+          firstImgPixel->r = brightR;
+          firstImgPixel->g = brightG;
+          firstImgPixel->b = brightB;
+      }
+    }
+  }
   return firstImage;
 }
 
