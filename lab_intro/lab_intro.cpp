@@ -74,8 +74,8 @@ PNG grayscale(PNG image) {
  * @return The image with a spotlight.
  */
 PNG createSpotlight(PNG image, int centerX, int centerY) {
-  for (int x = 0; x < image.width(); x++) {
-    for (int y = 0; y < image.height(); y++) {
+  for (int x = 0; (unsigned int) x < image.width(); x++) {
+    for (int y = 0; (unsigned int) y < image.height(); y++) {
       RGBAPixel* pixel = image.getPixel(x, y);
       
       /*
@@ -116,8 +116,8 @@ PNG createSpotlight(PNG image, int centerX, int centerY) {
 PNG ubcify(PNG image) {
   RGBAPixel ubcBlue = RGBAPixel(12, 35, 68);
   RGBAPixel ubcYellow = RGBAPixel(247, 184, 0);
-  for (int x = 0; x < image.width(); x++) {
-    for (int y = 0; y < image.height(); y++) {
+  for (int x = 0; (unsigned int) x < image.width(); x++) {
+    for (int y = 0; (unsigned int) y < image.height(); y++) {
       RGBAPixel* pixel = image.getPixel(x, y);
       if (colordist(*pixel, ubcBlue) < colordist(*pixel, ubcYellow)) {
         pixel->r = ubcBlue.r;
@@ -149,8 +149,8 @@ PNG ubcify(PNG image) {
 */
 PNG watermark(PNG firstImage, PNG secondImage) {
   RGBAPixel white = RGBAPixel();
-  for (int x = 0; x < secondImage.width(); x++) {
-    for (int y = 0; y < secondImage.height(); y++) {
+  for (int x = 0; (unsigned int) x < secondImage.width(); x++) {
+    for (int y = 0; (unsigned int) y < secondImage.height(); y++) {
       RGBAPixel* firstImgPixel = firstImage.getPixel(x, y);
       RGBAPixel* secondImgPixel = secondImage.getPixel(x, y);
       if (secondImgPixel->r == white.r
